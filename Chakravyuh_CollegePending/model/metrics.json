@@ -1,0 +1,97 @@
+{
+  "seed": 2026,
+  "data": "Entirely synthetic; same generator for training and test; no clinical validity established",
+  "split": {
+    "train_patients": 54,
+    "validation_patients": 18,
+    "test_patients": 18,
+    "train_windows": 7051,
+    "validation_windows": 2311
+  },
+  "fusion": {
+    "mae_120": 13.205,
+    "mae_all_horizons": 9.475,
+    "precision": 0.7647,
+    "recall": 0.2653,
+    "f1": 0.3939,
+    "brier": 0.0145,
+    "tp": 13,
+    "fp": 4,
+    "fn": 36,
+    "tn": 2250,
+    "windows": 2303,
+    "event_prevalence": 0.0213,
+    "mae_120_patient_bootstrap_ci95": [
+      12.344,
+      14.023
+    ],
+    "interval90_coverage_by_horizon": [
+      0.898,
+      0.9032,
+      0.888,
+      0.9092,
+      0.8971,
+      0.8945,
+      0.8862,
+      0.8767
+    ],
+    "new_onset_windows": 2281,
+    "new_onset": {
+      "mae_120": 13.222,
+      "mae_all_horizons": 9.489,
+      "precision": 0.6667,
+      "recall": 0.0625,
+      "f1": 0.1143,
+      "brier": 0.0126,
+      "tp": 2,
+      "fp": 1,
+      "fn": 30,
+      "tn": 2248,
+      "windows": 2281,
+      "event_prevalence": 0.014
+    }
+  },
+  "sensor_only": {
+    "mae_120": 13.62,
+    "mae_all_horizons": 9.713,
+    "precision": 0.5319,
+    "recall": 0.5102,
+    "f1": 0.5208,
+    "brier": 0.0156,
+    "tp": 25,
+    "fp": 22,
+    "fn": 24,
+    "tn": 2232,
+    "windows": 2303,
+    "event_prevalence": 0.0213
+  },
+  "persistence": {
+    "mae_120": 15.136,
+    "mae_all_horizons": 10.567,
+    "precision": 0.7727,
+    "recall": 0.3469,
+    "f1": 0.4789,
+    "brier": 0.0161,
+    "tp": 17,
+    "fp": 5,
+    "fn": 32,
+    "tn": 2249,
+    "windows": 2303,
+    "event_prevalence": 0.0213
+  },
+  "linear_trend": {
+    "mae_120": 30.932,
+    "mae_all_horizons": 18.202,
+    "precision": 0.1488,
+    "recall": 0.6531,
+    "f1": 0.2424,
+    "brier": 0.0868,
+    "tp": 32,
+    "fp": 183,
+    "fn": 17,
+    "tn": 2071,
+    "windows": 2303,
+    "event_prevalence": 0.0213
+  },
+  "threshold": 0.6
+}

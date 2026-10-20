@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.join(__dirname,'..'),E=require('../dashboard/engine.js'),f=JSON.parse(fs.readFileSync(path.join(root,'model/parity_fixture.json'))),m=JSON.parse(fs.readFileSync(path.join(root,'model/model.json')));
+const actual=E.features(f.ehr,f.rows);assert.equal(actual.length,f.features.length);actual.forEach((v,i)=>assert.ok(Math.abs(v-f.features[i])<1e-9,`feature ${i}`));const r=E.infer(m,f.ehr,f.rows);assert.equal(r.forecast.length,8);assert.ok(r.probability>=0&&r.probability<=1);f.rows.at(-1).glucose=null;assert.equal(E.infer(m,f.ehr,f.rows).available,false);console.log('Browser feature parity and abstention: PASS');
