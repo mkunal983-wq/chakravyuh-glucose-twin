@@ -1,0 +1,49 @@
+name: Expand submission source and validate
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'Chakravyuh-Submission.zip'
+      - '.github/workflows/unpack-submission.yml'
+permissions:
+  contents: write
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Expand the packaged source with path validation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          root = Path.cwd().resolve()
+          with zipfile.ZipFile('Chakravyuh-Submission.zip') as archive:
+              for item in archive.infolist():
+                  path = Path(item.filename)
+                  target = (root / path).resolve()
+                  if not target.is_relative_to(root) or not path.parts or path.parts[0] != 'Chakravyuh_CollegePending':
+                      raise ValueError('Unexpected archive path')
+              archive.extractall(root)
+          PY
+      - name: Verify prototype
+        working-directory: Chakravyuh_CollegePending
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -s tests -v
+          node tests/parity.cjs
+          node --check dashboard/app.js
+      - name: Publish readable source tree
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Chakravyuh_CollegePending
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Expand verified Chakravyuh source tree from submission archive'
+          git push
